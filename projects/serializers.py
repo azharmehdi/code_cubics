@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Image, Our_Team, WorkExperience
+from .models import Project, Image, Our_Team, WorkExperience, SignUp
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,3 +42,6 @@ class Our_TeamSerializer(serializers.ModelSerializer):
 
 class TextProcessSerializer(serializers.Serializer):
     text = serializers.CharField()
+
+class SignUpSerializer(serializers.Serializer):
+    text=serializers.CharField()
