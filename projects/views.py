@@ -1,6 +1,6 @@
 from rest_framework import generics
 from .models import Project, Our_Team
-from .serializers import ProjectSerializer, Our_TeamSerializer, TextProcessSerializer
+from .serializers import ProjectSerializer, Our_TeamSerializer, TextProcessSerializer,SignUpSerializer
 from rest_framework.decorators import api_view
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -40,3 +40,9 @@ def process_text(request):
         processed_text = '\n'.join(processed_lines)
         return Response({'processed_text': processed_text})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+def validate_data(request):
+    serializer=SignUpSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
