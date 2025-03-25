@@ -75,3 +75,10 @@ class PersonalImage(models.Model):
 class User(models.Model):
     first_name= models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
+
+
+class SignUp(models.Model):
+    username =models.CharField(max_length=9,unique=True)
+    first_name=models.CharField(max_length=36)
+    last_name=models.CharField(max_length=36)
+    email=models.EmailField()
