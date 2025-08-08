@@ -1,18 +1,44 @@
 from rest_framework import serializers
-from .models import Project, AboutUs, Home
+from .models import Project, Image, Our_Team, WorkExperience
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id', 'image']
 
 class ProjectSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)  # include related images
+
     class Meta:
         model = Project
-        fields = '__all__'  # fetch all fields
+        fields = ['id', 'title', 'excerpt', 'content', 'date', 'images', 'logo']
 
-class AboutUsSerializer(serializers.ModelSerializer):
+
+class ProjectMiniSerializer(serializers.ModelSerializer):
+    """Lightweight project serializer for showing under team profile"""
     class Meta:
-        model = AboutUs
-        fields = '__all__'
+        model = Project
+        fields = ['id', 'title', 'excerpt','date']  # only basic info for team page
 
-class HomeSerializer(serializers.ModelSerializer):
+class WorkExperienceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Home
-        fields = '__all__'
+        model = WorkExperience
+        fields = ['id', 'logo', 'company_name', 'designation', 'start_date', 'end_date']
+        
+class Our_TeamSerializer(serializers.ModelSerializer):
+    projects = ProjectMiniSerializer(many=True, read_only=True)  # nested projects
+    work_experiences = WorkExperienceSerializer(many=True, read_only=True)  # nested work experiences
 
+    class Meta:
+        model = Our_Team
+        fields = [
+            'id', 'username', 'first_name', 'last_name',
+            'expertise', 'achievements', 'title', 'image',
+            'resume', 'content', 'projects', 'work_experiences'
+        ]
+
+
+
+
+class TextProcessSerializer(serializers.Serializer):
+    text = serializers.CharField()
