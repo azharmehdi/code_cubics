@@ -71,3 +71,7 @@ class Image(models.Model):
 
 class PersonalImage(models.Model):
     image = models.ImageField(upload_to='project_images',blank=True,null=True)
+
+class User(models.Model):
+    first_name= models.CharField(max_length=50)
+    last_name=models.CharField(max_length=50)
